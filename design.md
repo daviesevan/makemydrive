@@ -11,12 +11,12 @@ colors:
   on-primary: "#151412"
 typography:
   display:
-    fontFamily: Plus Jakarta Mono
+    fontFamily: Plus Jakarta
     fontSize: 3.5rem
     fontWeight: 700
     letterSpacing: "-0.02em"
   h1:
-    fontFamily: Plus Jakarta Mono
+    fontFamily: Plus Jakarta
     fontSize: 1.8rem
     fontWeight: 700
   body:
