@@ -17,7 +17,6 @@ export default function OnboardingScreen() {
       <View
         style={[styles.heroSection, { paddingTop: insets.top + spacing[6] }]}
       >
-
         <Image
           source={require("../assets/animations/1.png")}
           style={styles.heroImage}
@@ -35,7 +34,9 @@ export default function OnboardingScreen() {
         </View> */}
 
         {/* Display heading */}
-        <Text style={styles.display}>{"Make my drive fun. (twende side quests)"}</Text>
+        <Text style={styles.display}>
+          {"Make my drive fun. (twende side quests)"}
+        </Text>
 
         {/* Body */}
         <Text style={styles.body}>
@@ -46,7 +47,7 @@ export default function OnboardingScreen() {
         {/* Primary CTA */}
         <TouchableOpacity
           style={styles.primaryButton}
-          onPress={() => router.push("/sign-up" as never)}
+          onPress={() => router.push("/(auth)/signup" as never)}
           activeOpacity={0.88}
         >
           <Text style={styles.primaryButtonText}>Get started</Text>
@@ -55,7 +56,7 @@ export default function OnboardingScreen() {
         {/* Secondary */}
         <TouchableOpacity
           style={styles.secondaryButton}
-          onPress={() => router.push("/sign-in" as never)}
+          onPress={() => router.push("/(auth)/signin" as never)}
           activeOpacity={0.7}
         >
           <Text style={styles.secondaryButtonText}>

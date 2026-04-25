@@ -1,12 +1,5 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { Stack } from "expo-router";
 
-const TabLayout = () => {
-  return (
-    <View>
-      <Text>TabLayout</Text>
-    </View>
-  )
+export default function TabLayout() {
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
-
-export default TabLayout

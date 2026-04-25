@@ -1,18 +1,38 @@
-import { SplashScreen, Stack } from "expo-router";
-import "./global.css";
 import { useFonts } from "expo-font";
+import * as Linking from "expo-linking";
+import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
+import { AuthProvider } from "../context/AuthContext";
+import { supabase } from "../lib/supabase";
+import "./global.css";
 
 SplashScreen.preventAutoHideAsync();
 
+// Handles the deep-link that Supabase sends after a magic link is clicked.
+// The URL looks like: makemydrivefun://auth/callback#access_token=...&refresh_token=...
+async function handleAuthDeepLink(url: string) {
+  if (!url.includes("auth/callback")) return;
+
+  const fragment = url.split("#")[1];
+  if (!fragment) return;
+
+  const params = new URLSearchParams(fragment);
+  const access_token = params.get("access_token");
+  const refresh_token = params.get("refresh_token");
+
+  if (access_token && refresh_token) {
+    await supabase.auth.setSession({ access_token, refresh_token });
+  }
+}
+
 function RootLayoutContent() {
   const [fontsLoaded] = useFonts({
-    'sans-regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
-    'sans-bold': require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
-    'sans-medium': require('../assets/fonts/PlusJakartaSans-Medium.ttf'),
-    'sans-semibold': require('../assets/fonts/PlusJakartaSans-SemiBold.ttf'),
-    'sans-extrabold': require('../assets/fonts/PlusJakartaSans-ExtraBold.ttf'),
-    'sans-light': require('../assets/fonts/PlusJakartaSans-Light.ttf'),
+    "sans-regular": require("../assets/fonts/PlusJakartaSans-Regular.ttf"),
+    "sans-bold": require("../assets/fonts/PlusJakartaSans-Bold.ttf"),
+    "sans-medium": require("../assets/fonts/PlusJakartaSans-Medium.ttf"),
+    "sans-semibold": require("../assets/fonts/PlusJakartaSans-SemiBold.ttf"),
+    "sans-extrabold": require("../assets/fonts/PlusJakartaSans-ExtraBold.ttf"),
+    "sans-light": require("../assets/fonts/PlusJakartaSans-Light.ttf"),
   });
 
   useEffect(() => {
@@ -21,11 +41,30 @@ function RootLayoutContent() {
     }
   }, [fontsLoaded]);
 
+  // Handle magic link deep links
+  useEffect(() => {
+    // App opened cold from a magic link tap
+    Linking.getInitialURL().then((url) => {
+      if (url) handleAuthDeepLink(url);
+    });
+
+    // App already open and a magic link is tapped
+    const subscription = Linking.addEventListener("url", ({ url }) => {
+      handleAuthDeepLink(url);
+    });
+
+    return () => subscription.remove();
+  }, []);
+
   if (!fontsLoaded) return null;
 
   return <Stack screenOptions={{ headerShown: false }} />;
 }
 
 export default function RootLayout() {
-  return <RootLayoutContent />;
+  return (
+    <AuthProvider>
+      <RootLayoutContent />
+    </AuthProvider>
+  );
 }
