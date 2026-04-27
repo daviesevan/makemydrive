@@ -1,8 +1,8 @@
 import { useFonts } from "expo-font";
 import * as Linking from "expo-linking";
-import { SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack, useRouter, useSegments } from "expo-router";
 import { useEffect } from "react";
-import { AuthProvider } from "../context/AuthContext";
+import { AuthProvider, useAuth } from "../context/AuthContext";
 import { supabase } from "../lib/supabase";
 import "./global.css";
 
@@ -26,6 +26,10 @@ async function handleAuthDeepLink(url: string) {
 }
 
 function RootLayoutContent() {
+  const { session, isLoading } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+
   const [fontsLoaded] = useFonts({
     "sans-regular": require("../assets/fonts/PlusJakartaSans-Regular.ttf"),
     "sans-bold": require("../assets/fonts/PlusJakartaSans-Bold.ttf"),
@@ -55,6 +59,30 @@ function RootLayoutContent() {
 
     return () => subscription.remove();
   }, []);
+
+  useEffect(() => {
+    if (isLoading || !fontsLoaded) return;
+
+    const inAuthGroup = segments[0] === "(auth)";
+    const isSetDisplayName = segments.join("/") === "(auth)/set-display-name";
+
+    if (session) {
+      const metadata = session.user.user_metadata;
+      const hasName = metadata?.full_name || metadata?.display_name;
+
+      if (!hasName) {
+        if (!isSetDisplayName) {
+          router.replace("/(auth)/set-display-name" as never);
+        }
+      } else if (segments[0] !== "(tabs)") {
+        router.replace("/(tabs)" as never);
+      }
+    } else {
+      if (!inAuthGroup && segments[0] !== "onboarding") {
+        router.replace("/onboarding" as never);
+      }
+    }
+  }, [session, isLoading, fontsLoaded, segments]);
 
   if (!fontsLoaded) return null;
 

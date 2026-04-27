@@ -56,9 +56,8 @@ export default function VerifyScreen() {
         return;
       }
       // Session is now set — AuthContext listener fires and updates navigation
-      router.replace("/(tabs)" as never);
     },
-    [email, router],
+    [email],
   );
 
   // Start countdown on mount
