@@ -20,8 +20,7 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const email = session?.user.email ?? "";
-  const displayName = email.split("@")[0] ?? "Traveller";
+  const displayName = session?.user.user_metadata.full_name;
 
   async function handleSignOut() {
     setLoading(true);
