@@ -196,10 +196,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   headerIcon: {
-    width: 180,
-    height: 180,
+    width: "100%",
+    height: 300,
     alignSelf: "center",
-    marginTop: -spacing[4],
+    marginTop: -spacing[6],
   },
   sprocketStrip: {
     flexDirection: "row",
