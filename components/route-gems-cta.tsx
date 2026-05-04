@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { colors, radius, spacing } from "../constants/themes";
+import { colors, spacing } from "../constants/themes";
 import { HeroIcon } from "./heroicons";
 
 export default function RouteGemsCta() {
@@ -9,12 +9,10 @@ export default function RouteGemsCta() {
   const [mbogi, setMbogi] = useState("2");
 
   return (
-    <View style={styles.card}>
-      <Text style={styles.heading}>Let's plan your next trip</Text>
-
-      <View style={styles.searchPanel}>
+    <View style={styles.outerShell}>
+      <View style={styles.card}>
         <View style={styles.searchRow}>
-          <View style={styles.iconWrap}>
+          <View style={[styles.iconWrap, styles.topIconWrap]}>
             <HeroIcon name="MagnifyingGlassIcon" size={18} color={colors.mutedForeground} />
           </View>
           <View style={styles.searchTextWrap}>
@@ -30,10 +28,8 @@ export default function RouteGemsCta() {
           </View>
         </View>
 
-        <View style={styles.divider} />
-
         <View style={styles.metaRow}>
-          <View style={styles.metaField}>
+          <View style={styles.metaCard}>
             <HeroIcon name="CalendarDaysIcon" size={18} color={colors.mutedForeground} />
             <View style={styles.metaTextWrap}>
               <Text style={styles.fieldLabel}>Dates</Text>
@@ -48,9 +44,7 @@ export default function RouteGemsCta() {
             </View>
           </View>
 
-          <View style={styles.metaSplit} />
-
-          <View style={styles.metaField}>
+          <View style={styles.metaCard}>
             <HeroIcon name="UserGroupIcon" size={18} color={colors.mutedForeground} />
             <View style={styles.metaTextWrap}>
               <Text style={styles.fieldLabel}>Mbogi</Text>
@@ -67,53 +61,55 @@ export default function RouteGemsCta() {
             </View>
           </View>
         </View>
-      </View>
 
-      <TouchableOpacity style={styles.ctaButton} activeOpacity={0.88}>
-        <Text style={styles.ctaText}>Find route with gems</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.ctaButton} activeOpacity={0.88}>
+          <Text style={styles.ctaText}>Explore Trips</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  outerShell: {
+    backgroundColor: "#E9ECE7",
+    borderRadius: 28,
+    borderWidth: 1,
+    borderColor: "#d8ddd4",
+    padding: spacing[4],
+  },
   card: {
-    backgroundColor: colors.foreground,
-    borderRadius: 24,
-    padding: spacing[6],
+    backgroundColor: colors.card,
+    borderRadius: 22,
+    padding: spacing[3],
     gap: spacing[4],
-  },
-  heading: {
-    fontFamily: "sans-bold",
-    fontSize: 14,
-    lineHeight: 20,
-    letterSpacing: -0.1,
-    color: colors.card,
-  },
-  searchPanel: {
-    backgroundColor: colors.background,
-    borderRadius: 16,
-    paddingVertical: spacing[4],
-    paddingHorizontal: spacing[4],
-    gap: spacing[2],
+    shadowColor: "#000",
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 2,
   },
   searchRow: {
+    backgroundColor: "#D9E0D5",
+    borderRadius: 16,
+    paddingVertical: spacing[3],
+    paddingHorizontal: spacing[4],
     flexDirection: "row",
     alignItems: "center",
     gap: spacing[2],
   },
   iconWrap: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    borderWidth: 1.5,
-    borderColor: colors.border,
+    width: 24,
+    height: 24,
     alignItems: "center",
     justifyContent: "center",
   },
+  topIconWrap: {
+    marginTop: spacing[2],
+  },
   searchTextWrap: {
     flex: 1,
-    gap: spacing[2],
+    gap: spacing[1],
   },
   fieldLabel: {
     fontFamily: "sans-regular",
@@ -130,31 +126,24 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     flexShrink: 1,
   },
-  divider: {
-    height: 1,
-    backgroundColor: colors.border,
-    opacity: 0.35,
-  },
   metaRow: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "stretch",
+    gap: spacing[2],
   },
-  metaField: {
+  metaCard: {
     flex: 1,
+    backgroundColor: "#D9E0D5",
+    borderRadius: 12,
+    paddingVertical: spacing[3],
+    paddingHorizontal: spacing[3],
     flexDirection: "row",
     alignItems: "flex-start",
     gap: spacing[2],
   },
   metaTextWrap: {
     flex: 1,
-    gap: spacing[2],
-  },
-  metaSplit: {
-    width: 1,
-    height: 42,
-    backgroundColor: colors.border,
-    opacity: 0.35,
-    marginHorizontal: spacing[2],
+    gap: spacing[1],
   },
   dateInput: {
     fontFamily: "sans-semibold",
@@ -165,9 +154,7 @@ const styles = StyleSheet.create({
   },
   ctaButton: {
     backgroundColor: colors.accent,
-    borderRadius: radius.md,
-    borderWidth: 2,
-    borderColor: colors.card,
+    borderRadius: 14,
     paddingVertical: spacing[4],
     alignItems: "center",
   },

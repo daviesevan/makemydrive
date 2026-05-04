@@ -6,15 +6,23 @@ import {
   View,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { HeroIcon } from "../../components/heroicons";
 import { colors, radius, spacing } from "../../constants/themes";
 
-const CATEGORIES = [
-  { id: 1, label: "Scenic Routes", icon: "🏔️", count: 24 },
-  { id: 2, label: "Hidden Gems", icon: "💎", count: 18 },
-  { id: 3, label: "Wildlife Spots", icon: "🦓", count: 31 },
-  { id: 4, label: "Food Stops", icon: "🍢", count: 42 },
-  { id: 5, label: "Cultural Sites", icon: "🏛️", count: 15 },
-  { id: 6, label: "Waterfalls", icon: "💧", count: 9 },
+type Category = {
+  id: number;
+  label: string;
+  icon: React.ComponentProps<typeof HeroIcon>["name"];
+  count: number;
+};
+
+const CATEGORIES: Category[] = [
+  { id: 1, label: "Scenic Routes", icon: "MapIcon", count: 24 },
+  { id: 2, label: "Hidden Gems", icon: "SparklesIcon", count: 18 },
+  { id: 3, label: "Wildlife Spots", icon: "BugAntIcon", count: 31 },
+  { id: 4, label: "Food Stops", icon: "CakeIcon", count: 42 },
+  { id: 5, label: "Cultural Sites", icon: "BuildingLibraryIcon", count: 15 },
+  { id: 6, label: "Waterfalls", icon: "BeakerIcon", count: 9 },
 ];
 
 const FEATURED = [
@@ -77,7 +85,13 @@ export default function ExploreScreen() {
               style={styles.categoryCard}
               activeOpacity={0.8}
             >
-              <Text style={styles.categoryIcon}>{cat.icon}</Text>
+              <View style={styles.categoryIconWrap}>
+                <HeroIcon
+                  name={cat.icon}
+                  size={22}
+                  color={colors.mutedForeground}
+                />
+              </View>
               <Text style={styles.categoryName}>{cat.label}</Text>
               <Text style={styles.categoryCount}>{cat.count}</Text>
             </TouchableOpacity>
@@ -173,8 +187,11 @@ const styles = StyleSheet.create({
     padding: spacing[4],
     gap: spacing[2],
   },
-  categoryIcon: {
-    fontSize: 24,
+  categoryIconWrap: {
+    width: 30,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
   },
   categoryName: {
     fontFamily: "sans-semibold",

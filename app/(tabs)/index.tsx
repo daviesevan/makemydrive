@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import DiscoverySegments from "../../components/discovery-segments";
 import PeelFilters from "../../components/peel-filters";
 import RouteGemsCta from "../../components/route-gems-cta";
 import TopBar from "../../components/topbar";
@@ -23,27 +24,30 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         <PeelFilters />
-        <RouteGemsCta />
+        <View style={styles.afterPeelTone}>
+          <RouteGemsCta />
+          <DiscoverySegments />
 
-      {/* Section */}
-      <View style={styles.section}>
-        <Text style={styles.sectionLabel}>TRENDING STOPS</Text>
-        <View style={styles.cardRow}>
-          {STOPS.map((stop) => (
-            <TouchableOpacity
-              key={stop.id}
-              style={styles.stopCard}
-              activeOpacity={0.8}
-            >
-              <View
-                style={[styles.stopThumb, { backgroundColor: stop.color }]}
-              />
-              <Text style={styles.stopName}>{stop.name}</Text>
-              <Text style={styles.stopMeta}>{stop.meta}</Text>
-            </TouchableOpacity>
-          ))}
+          {/* Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionLabel}>TRENDING STOPS</Text>
+            <View style={styles.cardRow}>
+              {STOPS.map((stop) => (
+                <TouchableOpacity
+                  key={stop.id}
+                  style={styles.stopCard}
+                  activeOpacity={0.8}
+                >
+                  <View
+                    style={[styles.stopThumb, { backgroundColor: stop.color }]}
+                  />
+                  <Text style={styles.stopName}>{stop.name}</Text>
+                  <Text style={styles.stopMeta}>{stop.meta}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
         </View>
-      </View>
       </ScrollView>
     </View>
   );
@@ -62,6 +66,16 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: spacing[6],
+    gap: spacing[6],
+  },
+  afterPeelTone: {
+    backgroundColor: colors.card,
+    marginHorizontal: -spacing[6],
+    borderTopLeftRadius: spacing[8],
+    borderTopRightRadius: spacing[8],
+    paddingHorizontal: spacing[6],
+    paddingTop: spacing[5],
+    paddingBottom: spacing[4],
     gap: spacing[6],
   },
   section: {

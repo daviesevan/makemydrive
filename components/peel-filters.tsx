@@ -10,11 +10,12 @@ type FilterItem = {
 };
 
 const FILTERS: FilterItem[] = [
-  { id: "beaches", label: "Beaches", icon: "SunIcon" },
-  { id: "scenic", label: "Scenic", icon: "MapPinIcon" },
-  { id: "camping", label: "Camping", icon: "FireIcon" },
-  { id: "mountains", label: "Mountains", icon: "MapIcon" },
-  { id: "food", label: "Food", icon: "CakeIcon" },
+  { id: "scenic-routes", label: "Scenic Routes", icon: "MapIcon" },
+  { id: "hidden-gems", label: "Hidden Gems", icon: "SparklesIcon" },
+  { id: "wildlife-spots", label: "Wildlife Spots", icon: "BugAntIcon" },
+  { id: "food-stops", label: "Food Stops", icon: "CakeIcon" },
+  { id: "cultural-sites", label: "Cultural Sites", icon: "BuildingLibraryIcon" },
+  { id: "waterfalls", label: "Waterfalls", icon: "BeakerIcon" },
 ];
 
 export default function PeelFilters() {
