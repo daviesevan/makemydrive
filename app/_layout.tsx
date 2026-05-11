@@ -82,7 +82,7 @@ function RootLayoutContent() {
         router.replace("/onboarding" as never);
       }
     }
-  }, [session, isLoading, fontsLoaded, segments]);
+  }, [session, isLoading, fontsLoaded, segments, router]);
 
   if (!fontsLoaded) return null;
 
